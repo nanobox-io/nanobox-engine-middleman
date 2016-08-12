@@ -17,7 +17,7 @@ is_nodejs_required() {
 
   # check for bower or any other frontend framework
 
-  echo "false"
+  echo "true"
   return
 }
 

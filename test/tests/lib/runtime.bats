@@ -30,7 +30,7 @@ setup() {
 
   stub_and_echo "gemfile_runtime" "ruby-from-package-json"
 
-  default=$(default_runtime)
+  default=$(default_ruby_runtime)
 
   restore "gemfile_runtime"
 
@@ -41,7 +41,7 @@ setup() {
 
   stub_and_echo "gemfile_runtime" "false"
 
-  default=$(default_runtime)
+  default=$(default_ruby_runtime)
 
   restore "gemfile_runtime"
 
@@ -53,22 +53,22 @@ setup() {
     nos_init "$(cat <<-END
 {
   "config": {
-    "runtime": "boxfile-runtime"
+    "ruby_runtime": "boxfile-runtime"
   }
 }
 END
 )"
 
-  runtime=$(runtime)
+  runtime=$(ruby_runtime)
 
   [ "$runtime" = "boxfile-runtime" ]
 }
 
 @test "runtime falls back to default runtime" {
 
-  stub_and_echo "default_runtime" "default-runtime"
+  stub_and_echo "default_ruby_runtime" "default-runtime"
 
-  default=$(default_runtime)
+  default=$(default_ruby_runtime)
 
   restore "gemfile_runtime"
 
@@ -89,9 +89,9 @@ END
 }
 
 @test "generates a valid condensed runtime" {
-  stub_and_echo "runtime" "ruby-2.2"
+  stub_and_echo "ruby_runtime" "ruby-2.2"
 
-  condensed=$(condensed_runtime)
+  condensed=$(condensed_ruby_runtime)
 
   restore "runtime"
 

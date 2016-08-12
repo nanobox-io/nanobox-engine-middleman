@@ -9,10 +9,16 @@
 nos_init "$@"
 
 # source common lib
-. ${engine_lib_dir}/ruby.sh
+. ${engine_lib_dir}/middleman.sh
 
 # Run the bundle install
 bundle_install
+
+# Run middleman build
+middleman_build
+
+# Configure Nginx
+configure_nginx
 
 # Clean old things out of the bundle
 bundle_clean

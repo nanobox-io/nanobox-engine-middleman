@@ -22,7 +22,8 @@ setup() {
 }
 
 @test "detects if nodejs is needed" {
-
+  skip
+  # middleman should always need nodejs
   nos_init "$(cat <<-END
 {
   "code_dir": "/tmp/code"

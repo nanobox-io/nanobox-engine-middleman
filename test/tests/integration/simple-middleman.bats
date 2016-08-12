@@ -33,7 +33,7 @@ setup() {
   mkdir -p /tmp/code
 
   # copy the app into place
-  cp -ar /test/apps/simple-ruby/* /tmp/code
+  cp -ar /test/apps/simple-middleman/* /tmp/code
 
   run pwd
 
@@ -89,7 +89,7 @@ setup() {
   cd /tmp/code
 
   # start the server in the background
-  bundle exec ruby app.rb -p 8080 > /dev/null 2>&1 &
+  nginx &
 
   # grab the pid
   pid=$!
@@ -105,7 +105,7 @@ setup() {
   echo "$output"
 
   # kill the server
-  kill -9 $pid > /dev/null 2>&1
+  kill $pid > /dev/null 2>&1
 
-  [ "$output" = "$expected" ]
+  [[ "$output" =~ "$expected" ]]
 }

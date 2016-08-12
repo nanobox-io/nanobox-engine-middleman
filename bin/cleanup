@@ -9,7 +9,7 @@
 nos_init "$@"
 
 # source common lib
-. ${engine_lib_dir}/ruby.sh
+. ${engine_lib_dir}/middleman.sh
 
 # Remove build dependencies to ensure the build env is small
 uninstall_build_packages

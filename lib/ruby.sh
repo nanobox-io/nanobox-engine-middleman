@@ -4,23 +4,17 @@
 # source nodejs
 . ${engine_lib_dir}/nodejs.sh
 
-# Copy the code into the live directory which will be used to run the app
-publish_release() {
-  nos_print_bullet "Moving build into live code directory..."
-  rsync -a $(nos_code_dir)/ $(nos_app_dir)
-}
-
 # Determine the ruby runtime to install. This will first check
 # within the Boxfile, then will rely on default_runtime to
 # provide a sensible default
-runtime() {
+ruby_runtime() {
   echo $(nos_validate \
-    "$(nos_payload "config_runtime")" \
-    "string" "$(default_runtime)")
+    "$(nos_payload "config_ruby_runtime")" \
+    "string" "$(default_ruby_runtime)")
 }
 
 # Provide a default ruby version.
-default_runtime() {
+default_ruby_runtime() {
   gem_runtime=$(gemfile_runtime)
 
   if [[ "$gem_runtime" = "false" ]]; then
@@ -37,7 +31,7 @@ gemfile_runtime() {
 
 # Install the ruby runtime along with any dependencies.
 install_runtime_packages() {
-  pkgs=("$(runtime)" "$(condensed_runtime)-bundler")
+  pkgs=("$(ruby_runtime)" "$(condensed_ruby_runtime)-bundler" "nginx")
 
   # if nodejs is required, let's install it
   if [[ "$(is_nodejs_required)" = "true" ]]; then
@@ -53,11 +47,11 @@ install_runtime_packages() {
 # Uninstall build dependencies
 uninstall_build_packages() {
   # currently ruby doesn't install any build-only deps... I think
-  pkgs=()
+  pkgs=("$(ruby_runtime)" "$(condensed_ruby_runtime)-bundler" $(query_dependencies) ruby nodejs)
 
   # if nodejs is required, let's fetch any node build deps
   if [[ "$(is_nodejs_required)" = "true" ]]; then
-    pkgs+=("$(nodejs_build_dependencies)")
+    pkgs+=("$(nodejs_dependencies)")
   fi
 
   # if pkgs isn't empty, let's uninstall what we don't need
@@ -68,8 +62,8 @@ uninstall_build_packages() {
 
 # The bundler package will look something like ruby22-bundler so
 # we need to fetch the condensed runtime to use for the package
-condensed_runtime() {
-  version=$(runtime)
+condensed_ruby_runtime() {
+  version=$(ruby_runtime)
   echo "${version//[.-]/}"
 }
 

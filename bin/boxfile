@@ -8,6 +8,8 @@ code.build:
     - vendor/bundle
     - .bundle
     - node_modules
+web.middleman:
+  start: nginx
 END
 
 exit 0

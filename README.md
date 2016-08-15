@@ -2,6 +2,14 @@
 
 This is a generic Middleman engine used to launch Middleman apps on [Nanobox](http://nanobox.io). The engine automatically creates a web component named `web.middleman` that includes an Nginx webserver. The engine auto-detects your Middleman `build_dir` specified in your `config.rb`.
 
+## Usage
+To use this engine, specify the engine in your boxfile.yml:
+
+```yaml
+code.build:
+  engine: middleman
+```
+
 ## Build Process
 - `bundle install`
 - `bundle clean`

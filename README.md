@@ -43,8 +43,9 @@ Specifies which Middleman runtime and version to use. The following runtimes are
 - jruby-9.0
 
 ```yaml
-build:
-  ruby_runtime: 'ruby-2.2'
+code.build:
+  config:
+    ruby_runtime: 'ruby-2.2'
 ```
 
 ---
@@ -59,7 +60,8 @@ Forces all incoming web requests to use https.
 
 ```yaml
 code.build:
-  force_https: false
+  config:
+    force_https: false
 ```
 
 ---

@@ -1,66 +1,31 @@
 # Middleman
 
-This is a generic Middleman engine used to launch [Nanobox](http://nanobox.io) that identifies a ruby project by the presence of a Gemfile in the root of the project. The engine will create a web if it finds a config.ru file. By default it will use [rackup](http://rack.github.io/) to start the a web server. [Thin](http://code.macournoyer.com/thin/), [puma](http://puma.io/), and [unicorn](http://unicorn.bogomips.org/) are also available.
-
-## App Detection
-To detect a Middleman app, this engine checks for the presence of a Gemfile.
+This is a generic Middleman engine used to launch Middleman apps on [Nanobox](http://nanobox.io). The engine automatically creates a web component named `web.middleman` that includes an Nginx webserver. The engine auto-detects your Middleman `build_dir` specified in your `config.rb`.
 
 ## Build Process
 - `bundle install`
 - `bundle clean`
-
-## Important Things to Know
-- The engine will only create a default web service if there is a `config.ru` or an `app.rb` in the root of the application.
-- If a `config.ru` file exists, the engine will launch the app as a rack app (`webserver: rackup`), unless a different [webserver](#webserver) is specified.
+- `bundle exec middleman build`
 
 ## Basic Configuration Options
 
-This engine exposes configuration options through the [Boxfile](http://docs.nanobox.io/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox. 
-
-##### *Advanced Configuration Options*
-This Readme outlines only the most basic and commonly used settings. For the full list of available configuration options, view the **[Advanced Middleman Configuration options](https://github.com/nanobox-io/nanobox-engine-ruby/blob/master/doc/advanced-ruby-config.md)**.
+This engine exposes configuration options through the [boxfile.yml](http://docs.nanobox.io/app-config/boxfile/), a yaml config file used to provision and configure your app's infrastructure when using Nanobox.
 
 #### Overview of Basic Boxfile Configuration Options
 ```yaml
-build:
-  # Web Server Settings
-  webserver: 'unicorn'
-
-  # Middleman Settings
+code.build:
+  # Ruby Settings
   ruby_runtime: ruby-2.2
+
+  # Nginx Settings
+  force_https: false
 ```
 
 ##### Quick Links
-[Web Server Settings](#web-server-settings)  
-[Middleman Settings](#ruby-settings)   
+[Ruby Settings](#ruby-settings)   
+[Web Server Settings](#web-server-settings)
 
-### Web Server Settings
-The following setting is used to select which web server to use in your application.
-
----
-
-#### webserver
-The following web servers are available:
-
-- rackup *(default)*
-- puma
-- thin
-- unicorn
-
-```yaml
-build:
-  webserver: 'rackup'
-```
-
-Web-server-specific config options are also available. They can be found in the following sections of the Advanced Configuration doc:
-
-[Puma Settings](https://github.com/nanobox-io/nanobox-engine-ruby/blob/master/doc/advanced-ruby-config.md#puma-settings)  
-[Thin Settings](https://github.com/nanobox-io/nanobox-engine-ruby/blob/master/doc/advanced-ruby-config.md#thin-settings)  
-[Unicorn Settings](https://github.com/nanobox-io/nanobox-engine-ruby/blob/master/doc/advanced-ruby-config.md#unicorn-settings)
-
----
-
-### Middleman Settings
+### Ruby Settings
 The following setting allows you to define your Middleman runtime environment.
 
 ---
@@ -72,6 +37,7 @@ Specifies which Middleman runtime and version to use. The following runtimes are
 - ruby-2.0
 - ruby-2.1
 - ruby-2.2 *(default)*
+- ruby-2.3
 - jruby-1.6
 - jruby-1.7
 - jruby-9.0
@@ -79,6 +45,21 @@ Specifies which Middleman runtime and version to use. The following runtimes are
 ```yaml
 build:
   ruby_runtime: 'ruby-2.2'
+```
+
+---
+
+### Web Server Settings
+The following setting is used to configure Nginx in your application.
+
+---
+
+#### force_https
+Forces all incoming web requests to use https.
+
+```yaml
+code.build:
+  force_https: false
 ```
 
 ---

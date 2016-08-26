@@ -26,12 +26,17 @@ middleman_build() {
 	nos_run_process "middleman build" "bundle exec middleman build"
 }
 
+force_https() {
+	echo $(nos_validate "$(nos_payload "config_force_https")" "boolean" "false")
+}
+
 # Generate the payload to render the npm profile template
 nginx_conf_payload() {
   cat <<-END
 {
   "code_dir": "$(nos_code_dir)",
-  "data_dir": "$(nos_data_dir)"
+  "data_dir": "$(nos_data_dir)",
+  "force_https": $(force_https)
 }
 END
 }

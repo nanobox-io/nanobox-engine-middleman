@@ -3,6 +3,11 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 cat <<-END
+code.build:		
+  lib_dirs:		
+    - vendor/bundle		
+    - .bundle		
+    - node_modules
 web.middleman:
   start: nginx
 END

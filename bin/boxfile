@@ -3,10 +3,10 @@
 # vim: ts=2 sw=2 ft=bash noet
 
 cat <<-END
-run.config:		
-  cache_dirs:		
-    - vendor/bundle		
-    - .bundle		
+run.config:
+  cache_dirs:
+    - vendor/bundle
+    - .bundle
     - node_modules
 web.middleman:
   start: nginx

@@ -6,7 +6,7 @@ This is a generic Middleman engine used to launch Middleman apps on [Nanobox](ht
 To use this engine, specify the engine in your boxfile.yml:
 
 ```yaml
-code.build:
+run.config:
   engine: middleman
 ```
 
@@ -21,7 +21,7 @@ This engine exposes configuration options through the [boxfile.yml](http://docs.
 
 #### Overview of Basic Boxfile Configuration Options
 ```yaml
-code.build:
+run.config:
   # Ruby Settings
   ruby_runtime: ruby-2.2
 
@@ -51,8 +51,8 @@ Specifies which Middleman runtime and version to use. The following runtimes are
 - jruby-9.0
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     ruby_runtime: 'ruby-2.2'
 ```
 
@@ -67,8 +67,8 @@ The following setting is used to configure Nginx in your application.
 Forces all incoming web requests to use https.
 
 ```yaml
-code.build:
-  config:
+run.config:
+  engine.config:
     force_https: false
 ```
 

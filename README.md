@@ -1,6 +1,6 @@
 # Middleman
 
-This is a generic Middleman engine used to launch Middleman apps on [Nanobox](http://nanobox.io). The engine automatically creates a web component named `web.middleman` that includes an Nginx webserver. The engine auto-detects your Middleman `build_dir` specified in your `config.rb`.
+This is a Middleman engine used to launch Middleman apps with [Nanobox](http://nanobox.io). The engine automatically creates a web component named `web.middleman` that includes an Nginx webserver. The engine auto-detects your Middleman `build_dir` specified in your `config.rb`.
 
 ## Usage
 To use this engine, specify the engine in your boxfile.yml:
@@ -27,6 +27,12 @@ run.config:
 
   # Nginx Settings
   force_https: false
+  error_pages:
+    - errors: 404
+      page: path/to/404.html
+  rewrites:
+    - if: '$request_uri ~ ^/path(.*)$'
+      then: 'return 301 https://another-url.com/download;'
 ```
 
 ##### Quick Links
@@ -58,7 +64,7 @@ run.config:
 
 ---
 
-### Web Server Settings
+### Nginx Settings
 The following setting is used to configure Nginx in your application.
 
 ---
@@ -74,5 +80,35 @@ run.config:
 
 ---
 
+#### error_pages
+Allows you to create custom error pages. You must provide one or more error codes (`errors`) and the path to the page that Nginx should serve when those errors arise. The page path should be relative to your `build_dir` once the code is built.
+
+```yaml
+run.config:
+  engine.config:
+    error_pages:
+      - errors: 404
+        page: path/to/404.html
+      - errors: 500 503
+        page: path/to/5xx.html
+```
+
+---
+
+#### rewrites
+Allows you to inject rewrites into your nginx.conf. Each consists of an `if`/`then` combination. These should be provided as strings that will be included in your nginx.conf as provided. 
+
+```yaml
+run.config:
+  engine.config:
+    error_pages:
+      - if: '$host = sub.mydomain.com'
+        then: 'return 301 https://mydomain.com$request_uri;'
+      - if: '$request_uri ~ ^/download(.*)$'
+        then: 'return 301 https://download.mydomain.com;'
+```
+
+---
+
 ## Help & Support
-This is a generic (non-framework-specific) Middleman engine provided by [Nanobox](http://nanobox.io). If you need help with this engine, you can reach out to us in the [#nanobox IRC channel](http://webchat.freenode.net/?channels=nanobox). If you are running into an issue with the engine, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-engine-ruby/issues/new).
+This is a Middleman engine provided by [Nanobox](http://nanobox.io). If you are running into an issue with the engine, feel free to [create a new issue on this project](https://github.com/nanobox-io/nanobox-engine-ruby/issues/new).

@@ -37,7 +37,7 @@ run.config:
 
 ##### Quick Links
 [Ruby Settings](#ruby-settings)   
-[Web Server Settings](#web-server-settings)
+[Nginx Settings](#nginx-settings)
 
 ### Ruby Settings
 The following setting allows you to define your Middleman runtime environment.

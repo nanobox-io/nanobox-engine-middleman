@@ -32,7 +32,7 @@ run.config:
       page: path/to/404.html
   rewrites:
     - if: '$request_uri ~ ^/path(.*)$'
-      then: 'return 301 https://another-url.com/download;'
+      then: 'return 301 https://another-url.com/path;'
 ```
 
 ##### Quick Links
@@ -101,7 +101,7 @@ Allows you to inject rewrites into your nginx.conf. Each consists of an `if`/`th
 ```yaml
 run.config:
   engine.config:
-    error_pages:
+    rewrites:
       - if: '$host = sub.mydomain.com'
         then: 'return 301 https://mydomain.com$request_uri;'
       - if: '$request_uri ~ ^/download(.*)$'
